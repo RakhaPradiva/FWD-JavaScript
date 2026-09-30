@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Tugas 2 Javascript - 30 Sept 2026</title>
+
+		<style>
+			table {
+				border-collapse: collapse;
+			}
+
+			th,
+			td {
+				border: 1px solid #000;
+				padding: 8px;
+				text-align: center;
+				font-size: 1rem;
+			}
+
+			tfoot {
+				font-weight: bold;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>M. Rakha Bintang Pradiva - Universitas Bina Nusantara</h1>
+		<h2>Tugas Petermuan 2 - Javascript</h2>
+
+		<hr />
+
+		<table>
+			<thead>
+				<tr>
+					<th>Nama Pegawai</th>
+					<th>Umur</th>
+					<th>Jabatan</th>
+					<th>Status</th>
+					<th>Gaji Pokok</th>
+					<th>Tunjangan Jabatan</th>
+					<th>BPJS</th>
+					<th>Tunjangan Keluarga</th>
+					<th>Total Gaji</th>
+				</tr>
+			</thead>
+
+			<script type="text/javascript">
+				let nama = "Dodi Prayodi";
+				let umur = 25;
+				let jabatan = "Manajer";
+				let statusPernikahan = "Menikah";
+
+				// cek gaji pokok berdasarkan jabatan
+				let gajiPokok;
+
+				if (jabatan == "Manajer") {
+					gajiPokok = 15000000;
+				} else if (jabatan == "Asisten Manajer") {
+					gajiPokok = 10000000;
+				} else if (jabatan == "Staff") {
+					gajiPokok = 5000000;
+				}
+
+				// kalkulasi Tunjangan Jabatan (15%), BPJS (10%) & Tunjangan Keluarga (20%)
+				let tunjanganJabatan = (gajiPokok * 15) / 100;
+				let bpjs = (gajiPokok * 10) / 100;
+				let tunjanganKeluarga = statusPernikahan == "Menikah" ? (gajiPokok * 20) / 100 : 0;
+
+				// kalkulasi total keseluruhan Gaji
+				let totalGaji = gajiPokok + tunjanganJabatan + bpjs + tunjanganKeluarga;
+
+				// display data di tbody
+				document.write("<tbody>");
+				document.write(`
+                    <tr>
+                        <td>${nama}</td>
+                        <td>${umur}</td>
+                        <td>${jabatan}</td>
+                        <td>${statusPernikahan}</td>
+                        <td>Rp ${gajiPokok}</td>
+                        <td>Rp ${tunjanganJabatan}</td>
+                        <td>Rp ${bpjs}</td>
+                        <td>Rp ${tunjanganKeluarga}</td>
+                        <td>Rp ${totalGaji}</td>
+                    </tr>
+                    
+                `);
+				document.write("</tbody>");
+
+				// display total gaji pada tfoot
+				document.write(`
+                    <tfoot>
+                        <tr>
+                            <td colspan="8">Total Gaji</td>
+                            <td>Rp ${totalGaji}</td>
+                        </tr>
+                    </tfoot>
+                `);
+			</script>
+		</table>
+	</body>
+</html>
