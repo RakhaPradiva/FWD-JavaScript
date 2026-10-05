@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Tugas 5 Javascript - 05 oktober 2026</title>
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+			crossorigin="anonymous"
+		/>
+	</head>
+	<body>
+		<h1 class="h1 text-center p-2">Manajemen Produk Toko Online</h1>
+		<hr />
+		<br />
+
+		<div class="container p-3">
+			<form id="form">
+				<div class="d-flex gap-5">
+					<div class="mb-3">
+						<label for="nama" class="form-label">Nama Produk</label>
+						<input type="text" class="form-control" id="nama" required />
+					</div>
+					<div class="mb-3">
+						<label for="harga" class="form-label">Harga</label>
+						<input type="text" class="form-control" id="harga" required />
+					</div>
+				</div>
+				<button type="submit" id="btn-tambah" class="btn btn-primary">Tambah Produk</button>
+			</form>
+		</div>
+
+		<div class="p-3">
+			<table class="table table-primary table-striped table-hover">
+				<thead class="table-primary">
+					<tr>
+						<th>ID</th>
+						<th>Nama</th>
+						<th>Harga</th>
+						<th>Aksi</th>
+					</tr>
+				</thead>
+				<tbody class="table-light" id="daftar-produk"></tbody>
+			</table>
+		</div>
+
+		<script type="text/javascript">
+			let produkList = [
+				{
+					id: 1,
+					nama: "Laptop",
+					harga: 12000000,
+				},
+				{
+					id: 2,
+					nama: "Smartphone",
+					harga: 5000000,
+				},
+				{
+					id: 3,
+					nama: "Printer",
+					harga: 2500000,
+				},
+				{
+					id: 4,
+					nama: "Monitor",
+					harga: 3000000,
+				},
+				{
+					id: 5,
+					nama: "CPU",
+					harga: 1500000,
+				},
+			];
+
+			const EventHandler = () => {
+				let btnHapus = document.querySelectorAll(".btn-hapus");
+				btnHapus.forEach((btn) => {
+					btn.addEventListener("click", (e) => {
+						hapusProduk(Number(e.target.dataset.id));
+						tampilkanProduk();
+					});
+				});
+			};
+
+			// Menambahkan Produk dengan Spread Operator
+			const tambahProduk = (id, nama, harga) => {
+				let produkBaru = { id, nama, harga };
+				produkList = [...produkList, produkBaru];
+			};
+
+			let idBaru = Math.max(...produkList.map((produk) => produk.id)) + 1;
+			let formProduk = document.getElementById("form");
+			formProduk.addEventListener("submit", (e) => {
+				e.preventDefault();
+				let idProduk = idBaru++;
+				let namaProduk = document.getElementById("nama").value;
+				let hargaProduk = Number(document.getElementById("harga").value);
+				tambahProduk(idProduk, namaProduk, hargaProduk);
+				tampilkanProduk();
+				formProduk.reset();
+			});
+
+			// Menghapus Produk dengan Rest Parameter
+			const hapusProduk = (...id) => {
+				produkList = produkList.filter((produk) => !id.includes(produk.id));
+			};
+
+			// Menampilkan Produk dengan Destructuring
+			const tampilkanProduk = () => {
+				let tabelDataProduk = document.getElementById("daftar-produk");
+
+				tabelDataProduk.innerHTML = "";
+				produkList.forEach((produk) => {
+					let { id, nama, harga } = produk;
+
+					let row = `<tr>
+              <td>${id}</td>
+              <td>${nama}</td>
+              <td>${harga.toLocaleString("id-ID")}</td>
+              <td>
+                <button class="btn btn-danger btn-hapus" data-id="${id}">Hapus Produk</button>
+              </td>
+              </tr>
+              `;
+
+					tabelDataProduk.innerHTML += row;
+				});
+				EventHandler();
+			};
+			tampilkanProduk();
+		</script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+			crossorigin="anonymous"
+		></script>
+	</body>
+</html>
