@@ -16,6 +16,7 @@ const store = (user) => {
 };
 
 const destroy = (userIndex) => {
+	// hapus data
 	users.splice(userIndex - 1, 1)[0];
 	index();
 };
